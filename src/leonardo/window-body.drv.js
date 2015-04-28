@@ -15,12 +15,15 @@ function windowBodyDirective($http, configuration) {
     templateUrl: 'window-body.html',
     scope: true,
     replace: true,
-    controller: function($scope){
-      $scope.selectedItem = 'activate';
-      $scope.NothasUrl = function(option){
+    controllerAs: 'windowBody',
+    controller: function ($scope){
+      this.newUrl = {};
+      this.selectedItem = 'activate';
+      this.NothasUrl = function (option){
         return !option.url;
       };
-      $scope.hasUrl = function(option){
+
+      this.hasUrl = function (option){
         return !!option.url;
       };
 
@@ -30,6 +33,11 @@ function windowBodyDirective($http, configuration) {
         });
         configuration.deactivateAll();
       };
+      this.createUrl = function () {
+        configuration.upsert({state: this.newUrl.state, url: this.newUrl.url});
+        this.newUrl = {};
+        this.addNewUrl = false;
+      }
 
       $scope.updateState = function(state){
         console.log(`update state: ${state.name} ${state.activeOption.name} ${state.active}`);
