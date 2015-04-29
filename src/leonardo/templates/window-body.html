@@ -27,9 +27,11 @@
             <td>
               <ul>
                 <li ng-repeat="option in state.options">
-                  Name: {{option.name}}<br/>
-                  Status: {{option.status}}<br/>
-                  Data: {{option.data}}<br/>
+                  Name: <input ng-model="option.name"
+                  ng-change="windowBody.optionNameChanged(state)" ng-model-options="{ updateOn: 'default
+                  blur', debounce: {'default': 500, 'blur': 0} }"><br/>
+                  Status: <input ng-model="option.status"><br/>
+                  Data: <textarea ng-model="option.data"></textarea><br/>
                 </li>
               </ul>
             </td>

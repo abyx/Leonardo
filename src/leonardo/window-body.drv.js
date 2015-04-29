@@ -34,9 +34,13 @@ function windowBodyDirective($http, configuration) {
         configuration.deactivateAll();
       };
       this.createUrl = function () {
-        configuration.upsert({state: this.newUrl.state, url: this.newUrl.url});
+        configuration.upsert({
+          state: this.newUrl.state,
+          url: this.newUrl.url
+        });
         this.newUrl = {};
         this.addNewUrl = false;
+        this.getStates();
       }
 
       $scope.updateState = function(state){
@@ -44,9 +48,22 @@ function windowBodyDirective($http, configuration) {
         configuration.upsertOption(state.name, state.activeOption.name, state.active);
       };
 
-      configuration.fetchStates().then(function(states){
-        $scope.states = states;
-      });
+      this.getStates = function () {
+        configuration.fetchStates().then(function(states){
+          $scope.states = states;
+          console.log(states);
+        });
+      }
+      this.optionNameChanged = function (name, url, options) {
+        console.log(arguments);
+      }
+      this.optionStatusChanged = function (name, url, options) {
+        console.log(arguments);
+      }
+      this.optionDataChanged = function (name, url, options) {
+        console.log(arguments);
+      }
+      this.getStates();
     },
     link: function(scope) {
       scope.test = {
